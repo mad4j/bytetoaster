@@ -5,9 +5,9 @@ import java.util.Arrays;
 
 
 /**
- * See: http://esolangs.org/wiki/BytePusher
+ * See: http://esolangs.org/wiki/ByteToaster
  * 
- * BytePusher is a minimalist vitual machine:
+ * ByteToaster is a minimalist vitual machine:
  * Framerate: 60 frmaes per second
  * CPU:         ByteByteJunp with 3 byte addresses
  * CPU Speed:   65536 instructions per frame (3932160 instructions per second. ~3.93 MHz)

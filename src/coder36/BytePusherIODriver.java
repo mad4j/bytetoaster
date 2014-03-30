@@ -1,7 +1,7 @@
 package coder36;
 
 /**
- * BytePusher hardware abstraction layer
+ * ByteToaster hardware abstraction layer
  * @author Mark Middleton
  */
 public interface BytePusherIODriver {
