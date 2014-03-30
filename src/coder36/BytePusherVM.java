@@ -23,7 +23,7 @@ import java.util.Arrays;
  * Author: Mark Middleton
  */
 public class BytePusherVM {
-	private char[] mem = new char[0xFFFFFF];
+	private byte[] mem = new byte[0xFFFFFF];
 	private BytePusherIODriver ioDriver;
 
 	public BytePusherVM(BytePusherIODriver ioDriver) {
@@ -41,7 +41,7 @@ public class BytePusherVM {
 		int pc = 0;
 		int i = 0;
 		while ((i = rom.read()) != -1) {
-			mem[pc++] = (char)i;
+			mem[pc++] = (byte)i;
 		}
 	}
 
@@ -51,8 +51,8 @@ public class BytePusherVM {
 	public void run() {
 		// run 65536 instructions
 		short s = ioDriver.getKeyPress();
-		mem[0] = (char) ((s & 0xFF00) >> 8);
-		mem[1] = (char) (s & 0xFF);
+		mem[0] = (byte) ((s & 0xFF00) >> 8);
+		mem[1] = (byte) (s & 0xFF);
 		int i = 0x10000;
 		int pc = getVal(2, 3);
 		while (i-- != 0) {
@@ -66,12 +66,12 @@ public class BytePusherVM {
 	private int getVal(int pc, int length) {
 		int v = 0;
 		for (int i = 0; i < length; i++) {
-			v = (v << 8) + mem[pc++];
+			v = (v << 8) + (int)(mem[pc++] & 0xFF);
 		}
 		return v;
 	}
 
-	private char[] copy(int start, int length) {
+	private byte[] copy(int start, int length) {
 		return Arrays.copyOfRange(mem, start, start + length);
 	}
 }
