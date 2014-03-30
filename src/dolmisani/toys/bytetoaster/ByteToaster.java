@@ -14,7 +14,7 @@ import coder36.BytePusherVM;
 import coder36.FrameRate;
 
 /**
- * Bytepusher implementation using the java Swing framework
+ * BytePusher implementation using the java Swing framework
  */
 public class ByteToaster extends JFrame {
 
