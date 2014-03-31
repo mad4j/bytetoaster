@@ -66,12 +66,12 @@ public class ByteToaster extends JFrame {
 		setTitle("Bytepusher for Java");
 		setLayout(new GridBagLayout());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		getContentPane().setPreferredSize(new Dimension(256 * 3, 256 * 3));
+		getContentPane().setPreferredSize(new Dimension(256 * 2, 256 * 2));
 		c = new Canvas();
 		getContentPane().add(c);
 		c.setFocusable(false); // canvas must be mon focusable otherwise key
 								// listeners dont work
-		c.setSize(new Dimension(256 * 3, 256 * 3));
+		c.setSize(new Dimension(256 * 2, 256 * 2));
 		pack();
 		c.createBufferStrategy(2);
 
