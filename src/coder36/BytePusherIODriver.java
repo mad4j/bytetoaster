@@ -21,4 +21,5 @@ public interface BytePusherIODriver {
 	   * Render 256*256 pixels.  
 	  */
 	  void renderDisplayFrame(byte[] data);
+	  void renderDisplayFrame(byte[] data, int offset, int length);
 }

@@ -45,6 +45,10 @@ public class BytePusherVM {
 		}
 	}
 
+	public byte[] getMemory() {
+		return mem;
+	}
+	
 	/**
 	 * CPU loop, to be called every 60th of a second
 	 */
@@ -60,7 +64,8 @@ public class BytePusherVM {
 			pc = getVal(pc + 6, 3);
 		}
 		ioDriver.renderAudioFrame(copy(getVal(6, 2) << 8, 256));
-		ioDriver.renderDisplayFrame(copy(getVal(5, 1) << 16, 256 * 256));
+		//ioDriver.renderDisplayFrame(copy(getVal(5, 1) << 16, 256 * 256));
+		ioDriver.renderDisplayFrame(mem, getVal(5, 1) << 16, 256*256);
 	}
 
 	private int getVal(int pc, int length) {

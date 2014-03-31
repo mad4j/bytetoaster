@@ -232,7 +232,11 @@ public class ByteToaster extends JFrame {
 		if (hideInfo)
 			return;
 		String info = "rom: " + rom + "\n" + "cpu: "
-				+ fr.counter.get("gpu").frameRate + "\n" + "fre: " + freq;
+				+ fr.counter.get("gpu").frameRate + "\n" + "fre: " + freq +"\n";
+		info += String.format("Keyb State  : %02x%02x00\n", vm.getMemory()[0x00], vm.getMemory()[0x01]);
+		info += String.format("RESET Addr  : %02x%02x%02x\n", vm.getMemory()[0x02], vm.getMemory()[0x03], vm.getMemory()[0x04]);		
+		info += String.format("Pixels Addr : %02x0000\n", vm.getMemory()[0x05]);
+		info += String.format("Samples Addr: %02x%02x00\n", vm.getMemory()[0x06], vm.getMemory()[0x06]);
 		writeText(g, info, 3, 10);
 	}
 

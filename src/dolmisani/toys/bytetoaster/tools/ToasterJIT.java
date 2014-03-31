@@ -1,5 +1,9 @@
 package dolmisani.toys.bytetoaster.tools;
 
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferByte;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.logging.Logger;
@@ -49,17 +53,14 @@ public class ToasterJIT {
 		}
 	}
 	
-	public int reservePage() {
-		int value = pc;
+	public int nextPage() {
 		pc = (pc & ~(PAGE_SIZE-1)) + PAGE_SIZE;
-		return value;
+		return pc;
 	}
 	
-	public int reserveBank() {
-		int value = pc;
+	public int nextBank() {
 		pc = (pc & ~(BANK_SIZE-1)) + BANK_SIZE;
-		System.out.println(pc);
-		return value;
+		return pc;
 	}
 	
 	public byte[] getMemory() {
@@ -93,6 +94,25 @@ public class ToasterJIT {
 		return pc;
 	}
 	
+	public int dTitleScreen(BufferedImage image) {
+		
+		BufferedImage i = new BufferedImage(256, 256, BufferedImage.TYPE_BYTE_INDEXED);
+		
+		Graphics2D g = (Graphics2D) i.getGraphics();
+		g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+		
+		g.drawImage(image, 0, 0, 256, 256, null);
+		
+		byte[] pixels = ((DataBufferByte) i.getRaster().getDataBuffer()).getData();
+		
+		System.arraycopy(pixels, 0, memory, pc, pixels.length);
+		pc += pixels.length;
+		
+		g.dispose();
+		
+		return pc;
+	}
+	
 	public int cOrg(int addr) {
 		pc = addr;
 		return pc;
@@ -112,6 +132,7 @@ public class ToasterJIT {
 	public void saveFile(String fileName) throws IOException {
 		
 		LOGGER.info(String.format("saving %d bytes in '%s'", lastAddr, fileName));
+		LOGGER.info(String.format("ROM zero page %02x %02x %02x %02x %02x %02x %02x %02x", memory[0], memory[1], memory[2], memory[3], memory[4], memory[5], memory[6], memory[7]));
 		
 		FileOutputStream fos = new FileOutputStream(fileName);
 		fos.write(memory, 0, lastAddr);

@@ -6,15 +6,15 @@ import java.awt.image.*;
 import javax.sound.sampled.*;
 
 /**
- * AWT / javax.sound implementation of BytePusherUIDriver
  * 
- * @author Mark Middleton
+ * @author Daniele Olmisani <daniele.olmisani@gmail.com>
  */
 public class BytePusherIODriverImpl extends KeyAdapter implements
 		BytePusherIODriver {
 
 	private SourceDataLine line;
 	private int keyPress;
+	
 	private BufferedImage image;
 	private byte[] pixels;
 
@@ -33,7 +33,6 @@ public class BytePusherIODriverImpl extends KeyAdapter implements
 		
 		image = new BufferedImage(256, 256, BufferedImage.TYPE_BYTE_INDEXED);
 		pixels = ((DataBufferByte) image.getRaster().getDataBuffer()).getData();
-		
 	}
 
 	/**
@@ -110,9 +109,16 @@ public class BytePusherIODriverImpl extends KeyAdapter implements
 	/**
 	 * Render 256*256 pixels.
 	 */
-	public void renderDisplayFrame(byte[] data) {
+	@Override
+	public void renderDisplayFrame(byte[] data, int offset, int length) {
 		
-		System.arraycopy(data, 0, pixels, 0, data.length);
+		//TODO: find a way to link BufferedImage directly to memory buffer
+		System.arraycopy(data, offset, pixels, 0, length);
+	}
+	
+	@Override
+	public void renderDisplayFrame(byte[] data) {
+		renderDisplayFrame(data, 0, data.length);
 	}
 
 	/**

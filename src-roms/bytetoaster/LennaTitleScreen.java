@@ -1,22 +1,30 @@
 package bytetoaster;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.util.Random;
 import java.util.logging.Logger;
 
+import javax.imageio.ImageIO;
+
 import dolmisani.toys.bytetoaster.tools.ROMBuilder;
 import dolmisani.toys.bytetoaster.tools.ToasterJIT;
 
-public class RandomPatternTest extends ToasterJIT implements ROMBuilder {
+public class LennaTitleScreen extends ToasterJIT implements ROMBuilder {
 	
 	private int samplesPageAddr;
 	private int progPageAddr;
 	private int pixelsBankAddr;
 
+	BufferedImage titleScreen;
+	
 	private static Logger LOGGER = Logger.getLogger(ToasterJIT.class.getSimpleName());
 	
-	public RandomPatternTest() {
+	public LennaTitleScreen() throws IOException {
+		
 		super();
+		titleScreen = ImageIO.read(new File("lenna.png"));
 	}
 	
 	@Override
@@ -28,10 +36,7 @@ public class RandomPatternTest extends ToasterJIT implements ROMBuilder {
 		initZeroPage();
 		
 		cOrg(pixelsBankAddr);
-		Random r = new Random();
-		for(int c=0; c<BANK_SIZE; c++) {
-			dByte(r.nextInt(256));
-		}
+		dTitleScreen(titleScreen);
 		
 		cOrg(progPageAddr);
 		iWait();
@@ -42,11 +47,11 @@ public class RandomPatternTest extends ToasterJIT implements ROMBuilder {
 	
 	private void initMemMap() {
 		
-		cOrg(PAGE_SIZE);
+		cOrg(0x00);
 		samplesPageAddr = nextPage();
 		progPageAddr = nextPage();
 		pixelsBankAddr = nextBank();
-		lastAddr = getPC();
+		lastAddr = nextBank();
 		
 		LOGGER.info(String.format(
 				"Initialized memory map:\n" + 
@@ -72,9 +77,9 @@ public class RandomPatternTest extends ToasterJIT implements ROMBuilder {
 	
 	public static void main(String[] args) throws IOException {
 		
-		RandomPatternTest r = new RandomPatternTest();
+		LennaTitleScreen r = new LennaTitleScreen();
 		
 		r.build();
-		r.saveFile("RandomPattern.BytePusher");
+		r.saveFile("lenna.BytePusher");
 	}
 }
