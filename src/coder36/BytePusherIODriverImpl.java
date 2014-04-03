@@ -92,20 +92,12 @@ public class BytePusherIODriverImpl extends KeyAdapter implements
 		}
 		return k;
 	}
-
-	/**
-	 * Render 256 bytes of audio
-	 */
-	public void renderAudioFrame(byte[] data) {
-		// convert from char [] to byte []
-		byte[] b = new byte[256];
-		for (int i = 0; i < 256; i++) {
-			b[i] = (byte) data[i];
-		}
-		// send buffer to audio device
-		line.write(b, 0, 256);
+	
+	@Override
+	public void renderAudioFrame(byte[] data, int offset, int length) {
+		line.write(data, offset, length);
 	}
-
+	
 	/**
 	 * Render 256*256 pixels.
 	 */
@@ -115,11 +107,7 @@ public class BytePusherIODriverImpl extends KeyAdapter implements
 		//TODO: find a way to link BufferedImage directly to memory buffer
 		System.arraycopy(data, offset, pixels, 0, length);
 	}
-	
-	@Override
-	public void renderDisplayFrame(byte[] data) {
-		renderDisplayFrame(data, 0, data.length);
-	}
+
 
 	/**
 	 * Invoked when a key has been pressed. See the class description for
@@ -144,4 +132,6 @@ public class BytePusherIODriverImpl extends KeyAdapter implements
 	public BufferedImage getDisplayImage() {
 		return image;
 	}
+
+	
 }

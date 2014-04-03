@@ -14,12 +14,11 @@ public interface BytePusherIODriver {
 	  /**
 	   * Render 256 bytes of audio 
 	  */
-	  void renderAudioFrame(byte[] data);
+	  void renderAudioFrame(byte[] data, int offset, int length);
 
 
 	  /**
 	   * Render 256*256 pixels.  
 	  */
-	  void renderDisplayFrame(byte[] data);
 	  void renderDisplayFrame(byte[] data, int offset, int length);
 }

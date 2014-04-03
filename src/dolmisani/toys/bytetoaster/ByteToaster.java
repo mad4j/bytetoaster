@@ -169,8 +169,10 @@ public class ByteToaster extends JFrame {
 	 * Handle special key presses
 	 */
 	private void handleSpecialKeys() {
-		if (keyPress == null)
+		
+		if (keyPress == null) {
 			return;
+		}
 
 		switch (keyPress.getKeyCode()) {
 		case KeyEvent.VK_H:
