@@ -38,59 +38,62 @@ public class BytePusherIODriverImpl extends KeyAdapter implements
 	/**
 	 * Get the current pressed key (0-9 A-F)
 	 */
-	public short getKeyPress() {
-		short k = 0;
+	@Override
+	public void updateKeys(byte[] data, int offset) {
+		
+		data[offset] = 0x00;
+		data[offset+1] = 0x00;
+		
 		switch (keyPress) {
 		case KeyEvent.VK_0:
-			k += 1;
+			data[offset+1] += 1;
 			break;
 		case KeyEvent.VK_1:
-			k += 2;
+			data[offset+1] += 2;
 			break;
 		case KeyEvent.VK_2:
-			k += 4;
+			data[offset+1] += 4;
 			break;
 		case KeyEvent.VK_3:
-			k += 8;
+			data[offset+1] += 8;
 			break;
 		case KeyEvent.VK_4:
-			k += 16;
+			data[offset+1] += 16;
 			break;
 		case KeyEvent.VK_5:
-			k += 32;
+			data[offset+1] += 32;
 			break;
 		case KeyEvent.VK_6:
-			k += 64;
+			data[offset+1] += 64;
 			break;
 		case KeyEvent.VK_7:
-			k += 128;
+			data[offset+1] += 128;
 			break;
 		case KeyEvent.VK_8:
-			k += 256;
+			data[offset] += 1;
 			break;
 		case KeyEvent.VK_9:
-			k += 512;
+			data[offset] += 2;
 			break;
 		case KeyEvent.VK_A:
-			k += 1024;
+			data[offset] += 4;
 			break;
 		case KeyEvent.VK_B:
-			k += 2048;
+			data[offset] += 8;
 			break;
 		case KeyEvent.VK_C:
-			k += 4096;
+			data[offset] += 16;
 			break;
 		case KeyEvent.VK_D:
-			k += 8192;
+			data[offset] += 32;
 			break;
 		case KeyEvent.VK_E:
-			k += 16384;
+			data[offset] += 64;
 			break;
 		case KeyEvent.VK_F:
-			k += 32768;
+			data[offset] += 128;
 			break;
 		}
-		return k;
 	}
 	
 	@Override

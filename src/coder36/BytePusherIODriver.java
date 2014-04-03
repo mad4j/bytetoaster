@@ -8,7 +8,7 @@ public interface BytePusherIODriver {
 	  /**
 	   * Get the current pressed key (0-9 A-F)
 	  */
-	  short getKeyPress();
+	  void updateKeys(byte[] data, int offset);
 
 
 	  /**

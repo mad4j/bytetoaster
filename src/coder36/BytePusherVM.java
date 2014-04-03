@@ -52,10 +52,7 @@ public class BytePusherVM {
 		
 		// run 65536 instructions
 		
-		short s = ioDriver.getKeyPress();
-		
-		mem[0] = (byte) ((s & 0xFF00) >> 8);
-		mem[1] = (byte) (s & 0xFF);
+		ioDriver.updateKeys(mem, 0x000000);
 		
 		int pc = getVal(2, 3);
 		for(int i=0; i<0x10000; i++) {

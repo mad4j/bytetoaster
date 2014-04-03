@@ -264,7 +264,7 @@ public class ByteToaster extends JFrame {
 				+ romsFolder
 				+ "\n\n"
 				+ "Full virtual machine specs can be found at http://esolangs.org/wiki/ByteToaster";
-		writeText(g, help, 100, 100);
+		writeText(g, help, 3, 100);
 
 	}
 
