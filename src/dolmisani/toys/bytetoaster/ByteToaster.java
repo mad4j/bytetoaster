@@ -96,7 +96,6 @@ public class ByteToaster extends JFrame {
 		// set up bytepusher vm
 		driver = new BytePusherIODriverImpl();
 		vm = new BytePusherVM(driver);
-		;
 
 		// register key listened which will be used by the driver
 		this.addKeyListener(driver);

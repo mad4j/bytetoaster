@@ -18,7 +18,7 @@ import java.util.Arrays;
  */
 public class BytePusherVM {
 	
-	private byte[] mem = new byte[0xFFFFFF];
+	private byte[] mem = new byte[0x01000000];
 	private BytePusherIODriver ioDriver;
 
 	public BytePusherVM(BytePusherIODriver ioDriver) {
@@ -52,23 +52,31 @@ public class BytePusherVM {
 		
 		// run 65536 instructions
 		
+		long startTime = System.currentTimeMillis();
+		
 		ioDriver.updateKeys(mem, 0x000000);
 		
-		int pc = getVal(2, 3);
-		for(int i=0; i<0x10000; i++) {
-			mem[getVal(pc + 3, 3)] = mem[getVal(pc, 3)];
-			pc = getVal(pc + 6, 3);
+		int pc = getAddress(2);
+		for(int i=0; i<0x010000; i++) {
+			mem[getAddress(pc+3)] = mem[getAddress(pc)];
+			pc = getAddress(pc+6);
 		}
 		
-		ioDriver.renderAudioFrame(mem, getVal(6, 2) << 8, 256);
-		ioDriver.renderDisplayFrame(mem, getVal(5, 1) << 16, 256*256);
+		ioDriver.renderAudioFrame(mem, getWord(6) << 8, 256);
+		ioDriver.renderDisplayFrame(mem, getByte(5) << 16, 256*256);
 	}
-
-	private int getVal(int pc, int length) {
-		int v = 0;
-		for (int i = 0; i < length; i++) {
-			v = (v << 8) + (int) (mem[pc++] & 0xFF);
-		}
-		return v;
+	
+	public int getByte(int offset) {
+		return (mem[offset] & 0xFF);
 	}
+	
+	public int getWord(int offset) {
+		
+		return (((int)mem[offset] & 0xFF) << 8) + ((int)mem[offset+1] & 0xFF);
+	}
+	
+	public int getAddress(int offset) {
+		return (((int)(mem[offset]) & 0xFF) << 16) + (((int)(mem[offset+1]) & 0xFF) << 8) + (int)(mem[offset+2] & 0xFF);
+	}
+	
 }
