@@ -51,9 +51,6 @@ public class BytePusherVM {
 	public void run() {
 		
 		// run 65536 instructions
-		
-		long startTime = System.currentTimeMillis();
-		
 		ioDriver.updateKeys(mem, 0x000000);
 		
 		int pc = getAddress(2);

@@ -23,6 +23,8 @@ public class ByteToaster extends JFrame {
 	 */
 	private static final long serialVersionUID = 148400990535394156L;
 	
+	private static Font FONT = new Font("Courier New", Font.PLAIN, 12);
+	
 	private BytePusherVM vm;
 	private BytePusherIODriverImpl driver;
 
@@ -301,8 +303,8 @@ public class ByteToaster extends JFrame {
 				vm.run();
 				// render vm image to screen
 				Graphics g = c.getBufferStrategy().getDrawGraphics();
-				Font font = new Font("Courier New", Font.PLAIN, 12);
-				g.setFont(font);
+				
+				g.setFont(FONT);
 				g.drawImage(driver.getDisplayImage(), 0, 0, c.getWidth(),
 						c.getHeight(), null);
 				// render text to screen
